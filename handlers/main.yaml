@@ -1,0 +1,5 @@
+- name: restart radarr
+  systemd:
+    name: "{{ radarr_service_name }}"
+    enabled: "{{ radarr_enable_service }}"
+    state: restarted

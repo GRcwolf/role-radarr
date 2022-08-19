@@ -1,0 +1,34 @@
+#+title: Radarr Role
+#+author: Chris Wolf <chris@chriswolf.ch>
+
+This role installs [[https://radarr.video/][radarr]] on the target system.
+
+** Limitations
+The role installs radarr using apt.
+So only debian based systems can be handled by this role.
+
+** Configuration
+This role allows some custiomization.
+The variables used and and a description for them are provided below.
+
+| Name                    | Default           | Description                                                      |
+|-------------------------+-------------------+------------------------------------------------------------------|
+| radarr_user             | radarr            | The user running the radarr service                              |
+| radarr_group            | media             | The group radarr runs as                                         |
+| radarr_data_dir         | /var/lib/radarr   | Directory where radarr stores its data                           |
+| radarr_install_dir      | /opt              | Directory in which radarr will be installed                      |
+| radarr_create_group     | yes               | Ensure the radarr group exists                                   |
+| radarr_create_user      | yes               | Ensure the radarr user exists                                    |
+| radarr_arch             | x64               | System architecture, used to download the correct radarr version |
+| radarr_systemd_template | radarr.service.j2 | Template used for the systemd service                            |
+| radarr_enable_service   | yes               | Specifies if the radarr service should be enabled                |
+
+** Variables
+The system also has some vars, those are not meant be changes.
+However, you can change them if you have the need to do so.
+
+| Name                | Default                                                                                              | Description              |
+|---------------------+------------------------------------------------------------------------------------------------------+--------------------------|
+| radarr_download_url | http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch={{ radarr_arch } | URL to download from     |
+| radarr_service_path | /etc/systemd/system/radarr.service                                                                   | Path of the service file |
+| radarr_service_name | radarr                                                                                               | Name of the service      |

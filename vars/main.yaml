@@ -1,0 +1,3 @@
+radarr_download_url: "http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch={{ radarr_arch }}"
+radarr_service_path: /etc/systemd/system/radarr.service
+radarr_service_name: radarr

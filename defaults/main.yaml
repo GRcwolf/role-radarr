@@ -1,0 +1,9 @@
+radarr_user: radarr
+radarr_group: media
+radarr_data_dir: /var/lib/radarr
+radarr_install_dir: /opt
+radarr_create_group: yes
+radarr_create_user: yes
+radarr_arch: x64
+radarr_systemd_template: "radarr.service.j2"
+radarr_enable_service: yes

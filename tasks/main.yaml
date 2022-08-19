@@ -1,0 +1,52 @@
+- name: Ensure dependencies
+  apt:
+    name:
+      - sqlite3
+      - curl
+    state: present
+
+- name: Ensure group exists
+  group:
+    name: "{{ radarr_group }}"
+    state: present
+  when: radarr_create_group
+
+- name: Ensure user exists
+  user:
+    name: "{{ radarr_user }}"
+    group: "{{ radarr_group }}"
+    state: present
+    system: yes
+    password_lock: yes
+    create_home: yes
+  when: radarr_create_user
+
+- name: Ensure data directory exists
+  file:
+    path: "{{ radarr_data_dir }}"
+    state: directory
+    owner: "{{ radarr_user }}"
+    group: "{{ radarr_group }}"
+
+- name: Download radarr
+  unarchive:
+    src: "{{ radarr_download_url }}"
+    dest: "{{ radarr_install_dir }}"
+    remote_src: yes
+    owner: "{{ radarr_user }}"
+    group: "{{ radarr_group }}"
+  notify:
+    - restart radarr
+
+- name: Create systemd service
+  template:
+    src: "{{ radarr_systemd_template }}"
+    dest: "{{ radarr_service_path }}"
+  notify:
+    - restart radarr
+
+- name: Make sure service runs
+  systemd:
+    name: "{{ radarr_service_name }}"
+    enabled: "{{ radarr_enable_service }}"
+    state: started
